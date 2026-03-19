@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CrusaderKids — Learn the Faith</title>
+  <meta name="description" content="CrusaderKids is a Catholic faith-education app for students and teachers. Learn the Catechism, track your progress, and build a daily habit of faith." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0f1f3d;
+      --navy2:  #162440;
+      --gold:   #c9a84c;
+      --gold2:  #e8c97a;
+      --cream:  #fdf8f0;
+      --red:    #8b1a1a;
+      --text:   #1a1a2e;
+      --muted:  #6b6b7b;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Crimson Pro', Georgia, serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.4;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--navy);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 24px 100px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Radial glow */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: -10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 900px;
+      height: 900px;
+      background: radial-gradient(ellipse, rgba(201,168,76,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Ornamental border lines */
+    .hero-border {
+      position: absolute;
+      inset: 20px;
+      border: 1px solid rgba(201,168,76,0.18);
+      pointer-events: none;
+    }
+    .hero-border::before, .hero-border::after {
+      content: '';
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-color: rgba(201,168,76,0.5);
+      border-style: solid;
+    }
+    .hero-border::before {
+      top: -1px; left: -1px;
+      border-width: 2px 0 0 2px;
+    }
+    .hero-border::after {
+      bottom: -1px; right: -1px;
+      border-width: 0 2px 2px 0;
+    }
+
+    /* Decorative cross motif */
+    .cross-motif {
+      position: absolute;
+      opacity: 0.04;
+      pointer-events: none;
+    }
+    .cross-motif.tl { top: -60px; left: -60px; font-size: 300px; }
+    .cross-motif.br { bottom: -60px; right: -60px; font-size: 300px; }
+
+    .eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.1s;
+    }
+
+    .hero h1 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(48px, 9vw, 100px);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.0;
+      letter-spacing: -1px;
+      margin-bottom: 8px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.25s;
+    }
+
+    .hero h1 span {
+      color: var(--gold);
+      display: block;
+    }
+
+    .divider-ornament {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 28px auto;
+      width: fit-content;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.4s;
+    }
+    .divider-ornament .line {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold));
+    }
+    .divider-ornament .line.r {
+      background: linear-gradient(to left, transparent, var(--gold));
+    }
+    .divider-ornament .diamond {
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      transform: rotate(45deg);
+    }
+
+    .hero p {
+      font-size: clamp(18px, 2.5vw, 22px);
+      font-weight: 300;
+      color: rgba(255,255,255,0.72);
+      max-width: 500px;
+      line-height: 1.65;
+      margin-bottom: 48px;
+      font-style: italic;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.5s;
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.65s;
+    }
+
+    .btn-primary {
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--navy);
+      background: linear-gradient(135deg, var(--gold2), var(--gold));
+      border: none;
+      padding: 18px 52px;
+      border-radius: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 24px rgba(201,168,76,0.3);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 36px rgba(201,168,76,0.45);
+    }
+
+    .store-note {
+      font-size: 13px;
+      color: rgba(255,255,255,0.38);
+      letter-spacing: 0.5px;
+    }
+
+    /* ── SCROLL INDICATOR ── */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards 1.2s;
+    }
+    .scroll-indicator span {
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: rgba(255,255,255,0.3);
+      text-transform: uppercase;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba(201,168,76,0.6), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    /* ── FEATURES ── */
+    .features {
+      padding: 120px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 700;
+      text-align: center;
+      color: var(--navy);
+      margin-bottom: 72px;
+      line-height: 1.25;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2px;
+      background: rgba(15,31,61,0.06);
+    }
+
+    .feature-card {
+      background: var(--cream);
+      padding: 48px 40px;
+      position: relative;
+      transition: background 0.3s ease;
+    }
+    .feature-card:hover {
+      background: #fff;
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 28px;
+      color: var(--gold);
+    }
+
+    .feature-card h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 14px;
+      letter-spacing: 0.3px;
+    }
+
+    .feature-card p {
+      font-size: 17px;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .feature-num {
+      position: absolute;
+      top: 24px;
+      right: 28px;
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      color: rgba(15,31,61,0.15);
+      letter-spacing: 1px;
+    }
+
+    /* ── TESTIMONIAL / QUOTE ── */
+    .quote-section {
+      background: var(--navy);
+      padding: 100px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .quote-section::before {
+      content: '\201C';
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Cinzel', serif;
+      font-size: 300px;
+      color: rgba(201,168,76,0.06);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    blockquote {
+      font-size: clamp(20px, 3vw, 30px);
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(255,255,255,0.85);
+      max-width: 680px;
+      margin: 0 auto 28px;
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
+
+    cite {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: var(--gold);
+      text-transform: uppercase;
+      font-style: normal;
+    }
+
+    /* ── FOR WHO ── */
+    .audience {
+      padding: 120px 24px;
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+    }
+    @media (max-width: 600px) {
+      .audience { grid-template-columns: 1fr; }
+    }
+
+    .audience-card {
+      background: var(--navy);
+      padding: 56px 44px;
+      position: relative;
+      overflow: hidden;
+    }
+    .audience-card::after {
+      content: '';
+      position: absolute;
+      bottom: -30px;
+      right: -30px;
+      width: 120px;
+      height: 120px;
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 50%;
+    }
+    .audience-card.light {
+      background: #fff;
+      border: 1px solid rgba(15,31,61,0.08);
+    }
+    .audience-card.light::after {
+      border-color: rgba(15,31,61,0.06);
+    }
+
+    .audience-tag {
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      display: block;
+    }
+    .audience-card.light .audience-tag {
+      color: var(--navy);
+    }
+
+    .audience-card h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+    .audience-card.light h3 { color: var(--navy); }
+
+    .audience-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .audience-card li {
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.65);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+    .audience-card.light li { color: var(--muted); }
+    .audience-card li::before {
+      content: '✦';
+      color: var(--gold);
+      font-size: 8px;
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      border-top: 1px solid rgba(201,168,76,0.15);
+      padding: 56px 24px;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Cinzel', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .footer-logo span { color: var(--gold); }
+
+    .footer-tagline {
+      font-size: 14px;
+      font-style: italic;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 32px;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+
+    .footer-links a {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+
+    .footer-copy {
+      font-size: 13px;
+      color: rgba(255,255,255,0.2);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50%       { opacity: 1;   transform: scaleY(1.15); }
+    }
+
+    /* Scroll-reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="hero-border"></div>
+    <div class="cross-motif tl">✝</div>
+    <div class="cross-motif br">✝</div>
+
+    <p class="eyebrow">Catholic Faith Education</p>
+
+    <h1>Crusader<span>Kids</span></h1>
+
+    <div class="divider-ornament">
+      <div class="line"></div>
+      <div class="diamond"></div>
+      <div class="diamond" style="opacity:0.4;transform:rotate(45deg) scale(0.6)"></div>
+      <div class="diamond"></div>
+      <div class="line r"></div>
+    </div>
+
+    <p>Learn the Faith. Build the habit.<br/>A Duolingo-style path through the Catechism.</p>
+
+    <div class="hero-cta">
+      <a href="#" class="btn-primary">Coming to Google Play</a>
+      <span class="store-note">Free to download &nbsp;·&nbsp; No ads</span>
+    </div>
+
+    <div class="scroll-indicator">
+      <div class="scroll-line"></div>
+      <span>Discover</span>
+    </div>
+  </section>
+
+  <!-- ── FEATURES ── -->
+  <section class="features">
+    <p class="section-label reveal">What CrusaderKids Does</p>
+    <h2 class="section-title reveal">Built for young Catholics<br/>and their teachers</h2>
+
+    <div class="features-grid">
+
+      <div class="feature-card reveal">
+        <span class="feature-num">01</span>
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
+        </svg>
+        <h3>Catechism Path</h3>
+        <p>A structured, level-by-level journey through the Catholic Catechism — no account needed to get started.</p>
+      </div>
+
+      <div class="feature-card reveal">
+        <span class="feature-num">02</span>
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/>
+        </svg>
+        <h3>Daily Streaks</h3>
+        <p>Earn streaks, unlock quizzes, and build a genuine daily habit of engaging with the Faith — just like prayer.</p>
+      </div>
+
+      <div class="feature-card reveal">
+        <span class="feature-num">03</span>
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"/>
+        </svg>
+        <h3>Teacher Tools</h3>
+        <p>Create custom courses with lessons and quizzes. Publish with a class code and track student progress in real time.</p>
+      </div>
+
+      <div class="feature-card reveal">
+        <span class="feature-num">04</span>
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <h3>No Ads. Ever.</h3>
+        <p>CrusaderKids is and will remain completely ad-free. No distractions. No data sold. Just learning.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── QUOTE ── -->
+  <section class="quote-section">
+    <blockquote class="reveal">
+      "Train up a child in the way he should go;<br/>
+      even when he is old he will not depart from it."
+    </blockquote>
+    <cite class="reveal">Proverbs 22:6</cite>
+  </section>
+
+  <!-- ── AUDIENCE ── -->
+  <section style="padding: 0 24px 120px; max-width: 900px; margin: 0 auto;">
+    <p class="section-label reveal" style="margin-top: 80px; margin-bottom: 16px;">Who It's For</p>
+    <h2 class="section-title reveal" style="margin-bottom: 48px;">Two roles, one mission</h2>
+    <div class="audience" style="max-width:100%;padding:0;margin:0;">
+
+      <div class="audience-card reveal">
+        <span class="audience-tag">Students</span>
+        <h3>Young Crusaders</h3>
+        <ul>
+          <li>Level-by-level quiz path</li>
+          <li>Hearts, streaks & rewards</li>
+          <li>Lessons to read before each quiz</li>
+          <li>Works offline with local Catechism</li>
+        </ul>
+      </div>
+
+      <div class="audience-card light reveal">
+        <span class="audience-tag">Teachers &amp; Parents</span>
+        <h3>Course Creators</h3>
+        <ul>
+          <li>Build custom lessons &amp; quizzes</li>
+          <li>Share via access code</li>
+          <li>Drag-to-reorder content</li>
+          <li>Publish or keep as a draft</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-logo">Crusader<span>Kids</span></div>
+    <p class="footer-tagline">Deus vult — learning the Faith, one day at a time.</p>
+
+    <nav class="footer-links">
+      <a href="./privacy-policy.html">Privacy Policy</a>
+      <a href="mailto:crusader.app@gmail.com">Contact</a>
+    </nav>
+
+    <p class="footer-copy">© 2026 CrusaderKids. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Scroll-reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
