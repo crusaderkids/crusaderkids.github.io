@@ -7,589 +7,401 @@
   <meta name="description" content="CrusaderKids is a Catholic faith-education app for students and teachers. Learn the Catechism, track your progress, and build a daily habit of faith." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --navy:   #0f1f3d;
-      --navy2:  #162440;
-      --gold:   #c9a84c;
-      --gold2:  #e8c97a;
-      --cream:  #fdf8f0;
-      --red:    #8b1a1a;
+      --red:    #cc2222;
+      --red2:   #a81c1c;
+      --gold:   #e8a020;
+      --gold2:  #f5c24a;
+      --sky:    #87CEEB;
+      --sky2:   #5bb8e8;
+      --cloud:  #dff0fb;
+      --white:  #ffffff;
+      --green:  #3a9e3f;
+      --green2: #2d7d31;
       --text:   #1a1a2e;
-      --muted:  #6b6b7b;
+      --muted:  #5a6a7a;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Crimson Pro', Georgia, serif;
-      background: var(--cream);
+      font-family: 'Nunito', sans-serif;
+      background: var(--white);
       color: var(--text);
       overflow-x: hidden;
-    }
-
-    /* ── NOISE TEXTURE OVERLAY ── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 999;
-      opacity: 0.4;
     }
 
     /* ── HERO ── */
     .hero {
       min-height: 100vh;
-      background: var(--navy);
+      background: linear-gradient(180deg, var(--sky) 0%, #b8e4f9 60%, #dff0fb 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 80px 24px 100px;
+      padding: 60px 24px 80px;
       position: relative;
       overflow: hidden;
     }
 
-    /* Radial glow */
-    .hero::after {
+    /* Clouds */
+    .cloud {
+      position: absolute;
+      background: var(--white);
+      border-radius: 50px;
+      opacity: 0.85;
+      filter: blur(1px);
+    }
+    .cloud::before, .cloud::after {
       content: '';
       position: absolute;
-      top: -10%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 900px;
-      height: 900px;
-      background: radial-gradient(ellipse, rgba(201,168,76,0.12) 0%, transparent 70%);
-      pointer-events: none;
+      background: var(--white);
+      border-radius: 50%;
+    }
+    .c1 { width:140px; height:50px; top:8%; left:-20px; animation: drift 18s ease-in-out infinite; }
+    .c1::before { width:70px; height:70px; top:-35px; left:20px; }
+    .c1::after  { width:50px; height:50px; top:-25px; left:60px; }
+    .c2 { width:180px; height:55px; top:12%; right:-30px; animation: drift 22s ease-in-out infinite reverse; }
+    .c2::before { width:80px; height:80px; top:-40px; left:30px; }
+    .c2::after  { width:60px; height:60px; top:-28px; left:80px; }
+    .c3 { width:110px; height:40px; top:40%; left:5%; opacity:0.6; animation: drift 26s ease-in-out infinite 4s; }
+    .c3::before { width:55px; height:55px; top:-28px; left:12px; }
+    .c3::after  { width:40px; height:40px; top:-20px; left:50px; }
+    .c4 { width:130px; height:45px; top:38%; right:3%; opacity:0.6; animation: drift 20s ease-in-out infinite reverse 2s; }
+    .c4::before { width:60px; height:60px; top:-30px; left:15px; }
+    .c4::after  { width:45px; height:45px; top:-22px; left:60px; }
+
+    @keyframes drift {
+      0%, 100% { transform: translateX(0); }
+      50%       { transform: translateX(20px); }
     }
 
-    /* Ornamental border lines */
-    .hero-border {
-      position: absolute;
-      inset: 20px;
-      border: 1px solid rgba(201,168,76,0.18);
-      pointer-events: none;
-    }
-    .hero-border::before, .hero-border::after {
-      content: '';
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      border-color: rgba(201,168,76,0.5);
-      border-style: solid;
-    }
-    .hero-border::before {
-      top: -1px; left: -1px;
-      border-width: 2px 0 0 2px;
-    }
-    .hero-border::after {
-      bottom: -1px; right: -1px;
-      border-width: 0 2px 2px 0;
-    }
-
-    /* Decorative cross motif */
-    .cross-motif {
-      position: absolute;
-      opacity: 0.04;
-      pointer-events: none;
-    }
-    .cross-motif.tl { top: -60px; left: -60px; font-size: 300px; }
-    .cross-motif.br { bottom: -60px; right: -60px; font-size: 300px; }
-
-    .eyebrow {
-      font-family: 'Cinzel', serif;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 24px;
-      opacity: 0;
-      animation: fadeUp 0.8s ease forwards 0.1s;
-    }
-
-    .hero h1 {
-      font-family: 'Cinzel', serif;
-      font-size: clamp(48px, 9vw, 100px);
+    .hero-title {
+      font-size: clamp(48px, 10vw, 88px);
       font-weight: 900;
-      color: #fff;
       line-height: 1.0;
-      letter-spacing: -1px;
-      margin-bottom: 8px;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 2;
       opacity: 0;
-      animation: fadeUp 0.9s ease forwards 0.25s;
+      animation: popIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.1s;
+    }
+    .hero-title .line1 { color: var(--red); display: block; }
+    .hero-title .line2 { color: var(--gold); display: block; }
+
+    .hero-mascot {
+      width: min(320px, 80vw);
+      position: relative;
+      z-index: 2;
+      opacity: 0;
+      animation: popIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.3s;
+      filter: drop-shadow(0 12px 24px rgba(0,0,0,0.15));
     }
 
-    .hero h1 span {
-      color: var(--gold);
-      display: block;
-    }
-
-    .divider-ornament {
-      display: flex;
+    .hero-btn {
+      display: inline-flex;
       align-items: center;
-      gap: 16px;
-      margin: 28px auto;
-      width: fit-content;
-      opacity: 0;
-      animation: fadeUp 0.9s ease forwards 0.4s;
-    }
-    .divider-ornament .line {
-      width: 60px;
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--gold));
-    }
-    .divider-ornament .line.r {
-      background: linear-gradient(to left, transparent, var(--gold));
-    }
-    .divider-ornament .diamond {
-      width: 6px;
-      height: 6px;
-      background: var(--gold);
-      transform: rotate(45deg);
-    }
-
-    .hero p {
-      font-size: clamp(18px, 2.5vw, 22px);
-      font-weight: 300;
-      color: rgba(255,255,255,0.72);
-      max-width: 500px;
-      line-height: 1.65;
-      margin-bottom: 48px;
-      font-style: italic;
-      opacity: 0;
-      animation: fadeUp 0.9s ease forwards 0.5s;
-    }
-
-    .hero-cta {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-      opacity: 0;
-      animation: fadeUp 0.9s ease forwards 0.65s;
-    }
-
-    .btn-primary {
-      font-family: 'Cinzel', serif;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: var(--navy);
-      background: linear-gradient(135deg, var(--gold2), var(--gold));
-      border: none;
+      gap: 10px;
+      background: linear-gradient(180deg, #4ec44e 0%, var(--green) 60%, var(--green2) 100%);
+      color: #fff;
+      font-family: 'Nunito', sans-serif;
+      font-size: 22px;
+      font-weight: 900;
       padding: 18px 52px;
-      border-radius: 2px;
-      cursor: pointer;
+      border-radius: 50px;
       text-decoration: none;
-      display: inline-block;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      box-shadow: 0 4px 24px rgba(201,168,76,0.3);
-    }
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 36px rgba(201,168,76,0.45);
-    }
-
-    .store-note {
-      font-size: 13px;
-      color: rgba(255,255,255,0.38);
-      letter-spacing: 0.5px;
-    }
-
-    /* ── SCROLL INDICATOR ── */
-    .scroll-indicator {
-      position: absolute;
-      bottom: 36px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 6px 0 var(--green2), 0 8px 20px rgba(0,0,0,0.2);
+      transition: transform 0.1s, box-shadow 0.1s;
+      position: relative;
+      z-index: 2;
+      margin-top: 8px;
       opacity: 0;
-      animation: fadeIn 1s ease forwards 1.2s;
+      animation: popIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.5s;
     }
-    .scroll-indicator span {
-      font-family: 'Cinzel', serif;
-      font-size: 9px;
-      letter-spacing: 3px;
-      color: rgba(255,255,255,0.3);
-      text-transform: uppercase;
-    }
-    .scroll-line {
-      width: 1px;
-      height: 40px;
-      background: linear-gradient(to bottom, rgba(201,168,76,0.6), transparent);
-      animation: scrollPulse 2s ease-in-out infinite;
+    .hero-btn:hover  { transform: translateY(-2px); box-shadow: 0 8px 0 var(--green2), 0 10px 24px rgba(0,0,0,0.22); }
+    .hero-btn:active { transform: translateY(3px);  box-shadow: 0 3px 0 var(--green2), 0 4px 12px rgba(0,0,0,0.18); }
+    .hero-btn .castle { font-size: 22px; }
+
+    .hero-sub {
+      font-size: 15px;
+      color: rgba(255,255,255,0.85);
+      font-weight: 700;
+      margin-top: 16px;
+      position: relative;
+      z-index: 2;
+      letter-spacing: 0.3px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.7s;
     }
 
     /* ── FEATURES ── */
     .features {
-      padding: 120px 24px;
-      max-width: 1100px;
+      background: #fff;
+      padding: 80px 24px;
+    }
+    .features-inner {
+      max-width: 960px;
       margin: 0 auto;
     }
-
-    .section-label {
-      font-family: 'Cinzel', serif;
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 4px;
-      text-transform: uppercase;
+    .section-tag {
+      display: inline-block;
+      background: #fff3cd;
       color: var(--gold);
-      text-align: center;
-      margin-bottom: 16px;
+      border: 2px solid var(--gold2);
+      border-radius: 50px;
+      padding: 4px 16px;
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
     }
-
     .section-title {
-      font-family: 'Cinzel', serif;
-      font-size: clamp(28px, 4vw, 42px);
-      font-weight: 700;
-      text-align: center;
-      color: var(--navy);
-      margin-bottom: 72px;
-      line-height: 1.25;
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 48px;
+      line-height: 1.2;
     }
+    .section-title span { color: var(--red); }
 
     .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2px;
-      background: rgba(15,31,61,0.06);
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
     }
-
     .feature-card {
-      background: var(--cream);
-      padding: 48px 40px;
-      position: relative;
-      transition: background 0.3s ease;
+      background: #f8fafc;
+      border-radius: 20px;
+      padding: 28px 24px;
+      border: 2px solid #e8f0fe;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
     .feature-card:hover {
-      background: #fff;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.08);
     }
-
     .feature-icon {
-      width: 48px;
-      height: 48px;
-      margin-bottom: 28px;
-      color: var(--gold);
-    }
-
-    .feature-card h3 {
-      font-family: 'Cinzel', serif;
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--navy);
+      font-size: 36px;
       margin-bottom: 14px;
-      letter-spacing: 0.3px;
+      display: block;
     }
-
-    .feature-card p {
+    .feature-card h3 {
       font-size: 17px;
-      font-weight: 300;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .feature-card p {
+      font-size: 14px;
       color: var(--muted);
-      line-height: 1.7;
+      line-height: 1.65;
     }
 
-    .feature-num {
-      position: absolute;
-      top: 24px;
-      right: 28px;
-      font-family: 'Cinzel', serif;
-      font-size: 11px;
-      color: rgba(15,31,61,0.15);
-      letter-spacing: 1px;
-    }
-
-    /* ── TESTIMONIAL / QUOTE ── */
-    .quote-section {
-      background: var(--navy);
-      padding: 100px 24px;
+    /* ── QUOTE ── */
+    .quote-band {
+      background: linear-gradient(135deg, var(--red) 0%, var(--red2) 100%);
+      padding: 64px 24px;
       text-align: center;
-      position: relative;
-      overflow: hidden;
     }
-    .quote-section::before {
-      content: '\201C';
-      position: absolute;
-      top: -40px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-family: 'Cinzel', serif;
-      font-size: 300px;
-      color: rgba(201,168,76,0.06);
-      line-height: 1;
-      pointer-events: none;
-    }
-
-    blockquote {
-      font-size: clamp(20px, 3vw, 30px);
-      font-weight: 300;
+    .quote-band blockquote {
+      font-size: clamp(18px, 3vw, 26px);
+      font-weight: 700;
+      color: rgba(255,255,255,0.95);
+      max-width: 600px;
+      margin: 0 auto 16px;
+      line-height: 1.5;
       font-style: italic;
-      color: rgba(255,255,255,0.85);
-      max-width: 680px;
-      margin: 0 auto 28px;
-      line-height: 1.6;
-      position: relative;
-      z-index: 1;
     }
-
-    cite {
-      font-family: 'Cinzel', serif;
-      font-size: 11px;
-      letter-spacing: 3px;
-      color: var(--gold);
+    .quote-band cite {
+      font-size: 13px;
+      letter-spacing: 2px;
       text-transform: uppercase;
+      color: var(--gold2);
       font-style: normal;
+      font-weight: 800;
     }
 
-    /* ── FOR WHO ── */
+    /* ── AUDIENCE ── */
     .audience {
-      padding: 120px 24px;
-      max-width: 900px;
+      padding: 80px 24px;
+      background: #f8fafc;
+    }
+    .audience-grid {
+      max-width: 860px;
       margin: 0 auto;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 3px;
+      gap: 20px;
     }
-    @media (max-width: 600px) {
-      .audience { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 580px) { .audience-grid { grid-template-columns: 1fr; } }
 
     .audience-card {
-      background: var(--navy);
-      padding: 56px 44px;
-      position: relative;
-      overflow: hidden;
+      background: var(--white);
+      border-radius: 20px;
+      padding: 32px 28px;
+      border: 2px solid #e2e8f0;
     }
-    .audience-card::after {
-      content: '';
-      position: absolute;
-      bottom: -30px;
-      right: -30px;
-      width: 120px;
-      height: 120px;
-      border: 1px solid rgba(201,168,76,0.15);
-      border-radius: 50%;
+    .audience-card.red {
+      background: var(--red);
+      border-color: var(--red2);
     }
-    .audience-card.light {
-      background: #fff;
-      border: 1px solid rgba(15,31,61,0.08);
-    }
-    .audience-card.light::after {
-      border-color: rgba(15,31,61,0.06);
-    }
-
-    .audience-tag {
-      font-family: 'Cinzel', serif;
-      font-size: 9px;
-      letter-spacing: 4px;
+    .audience-card .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 800;
       text-transform: uppercase;
+      letter-spacing: 2px;
       color: var(--gold);
-      margin-bottom: 20px;
-      display: block;
+      margin-bottom: 10px;
     }
-    .audience-card.light .audience-tag {
-      color: var(--navy);
-    }
-
+    .audience-card.red .tag { color: var(--gold2); }
     .audience-card h3 {
-      font-family: 'Cinzel', serif;
-      font-size: 26px;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 20px;
-      line-height: 1.2;
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 16px;
     }
-    .audience-card.light h3 { color: var(--navy); }
-
-    .audience-card ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
+    .audience-card.red h3 { color: #fff; }
+    .audience-card ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
     .audience-card li {
-      font-size: 16px;
-      font-weight: 300;
-      color: rgba(255,255,255,0.65);
+      font-size: 15px;
+      color: var(--muted);
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       gap: 10px;
-      line-height: 1.5;
     }
-    .audience-card.light li { color: var(--muted); }
+    .audience-card.red li { color: rgba(255,255,255,0.85); }
     .audience-card li::before {
-      content: '✦';
-      color: var(--gold);
-      font-size: 8px;
-      margin-top: 6px;
+      content: '⚔️';
+      font-size: 14px;
       flex-shrink: 0;
     }
+    .audience-card.red li::before { content: '✝️'; }
 
     /* ── FOOTER ── */
     footer {
-      background: var(--navy);
-      border-top: 1px solid rgba(201,168,76,0.15);
-      padding: 56px 24px;
+      background: var(--text);
+      padding: 48px 24px;
       text-align: center;
     }
-
     .footer-logo {
-      font-family: 'Cinzel', serif;
-      font-size: 22px;
-      font-weight: 700;
-      color: #fff;
+      font-size: 26px;
+      font-weight: 900;
       margin-bottom: 6px;
     }
-    .footer-logo span { color: var(--gold); }
-
+    .footer-logo .r { color: var(--red); }
+    .footer-logo .g { color: var(--gold); }
     .footer-tagline {
-      font-size: 14px;
-      font-style: italic;
-      color: rgba(255,255,255,0.35);
-      margin-bottom: 32px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 24px;
     }
-
     .footer-links {
       display: flex;
       justify-content: center;
-      gap: 32px;
+      gap: 28px;
       flex-wrap: wrap;
-      margin-bottom: 40px;
+      margin-bottom: 24px;
     }
-
     .footer-links a {
-      font-family: 'Cinzel', serif;
-      font-size: 11px;
-      letter-spacing: 2px;
+      font-size: 13px;
+      font-weight: 700;
       text-transform: uppercase;
+      letter-spacing: 1px;
       color: rgba(255,255,255,0.45);
       text-decoration: none;
       transition: color 0.2s;
     }
     .footer-links a:hover { color: var(--gold); }
-
-    .footer-copy {
-      font-size: 13px;
-      color: rgba(255,255,255,0.2);
-    }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
 
     /* ── ANIMATIONS ── */
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.85) translateY(16px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(12px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
-    @keyframes scrollPulse {
-      0%, 100% { opacity: 0.4; transform: scaleY(1); }
-      50%       { opacity: 1;   transform: scaleY(1.15); }
-    }
 
-    /* Scroll-reveal */
     .reveal {
       opacity: 0;
-      transform: translateY(32px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
     }
-    .reveal.visible {
-      opacity: 1;
-      transform: none;
-    }
+    .reveal.visible { opacity: 1; transform: none; }
   </style>
 </head>
 <body>
 
   <!-- ── HERO ── -->
   <section class="hero">
-    <div class="hero-border"></div>
-    <div class="cross-motif tl">✝</div>
-    <div class="cross-motif br">✝</div>
+    <div class="cloud c1"></div>
+    <div class="cloud c2"></div>
+    <div class="cloud c3"></div>
+    <div class="cloud c4"></div>
 
-    <p class="eyebrow">Catholic Faith Education</p>
+    <h1 class="hero-title">
+      <span class="line1">Crusader</span>
+      <span class="line2">Kids</span>
+    </h1>
 
-    <h1>Crusader<span>Kids</span></h1>
+    <img
+      src="https://crusaderkids.github.io/assets/mascot-with-cathedral.png"
+      alt="CrusaderKids mascot"
+      class="hero-mascot"
+      onerror="this.style.display='none'"
+    />
 
-    <div class="divider-ornament">
-      <div class="line"></div>
-      <div class="diamond"></div>
-      <div class="diamond" style="opacity:0.4;transform:rotate(45deg) scale(0.6)"></div>
-      <div class="diamond"></div>
-      <div class="line r"></div>
-    </div>
+    <a href="#" class="hero-btn">
+      <span class="castle">🏰</span> Coming to Google Play
+    </a>
 
-    <p>Learn the Faith. Build the habit.<br/>A Duolingo-style path through the Catechism.</p>
-
-    <div class="hero-cta">
-      <a href="#" class="btn-primary">Coming to Google Play</a>
-      <span class="store-note">Free to download &nbsp;·&nbsp; No ads</span>
-    </div>
-
-    <div class="scroll-indicator">
-      <div class="scroll-line"></div>
-      <span>Discover</span>
-    </div>
+    <p class="hero-sub">Free to download &nbsp;·&nbsp; No ads &nbsp;·&nbsp; Learn the Faith</p>
   </section>
 
   <!-- ── FEATURES ── -->
   <section class="features">
-    <p class="section-label reveal">What CrusaderKids Does</p>
-    <h2 class="section-title reveal">Built for young Catholics<br/>and their teachers</h2>
+    <div class="features-inner">
+      <div class="section-tag reveal">⚔️ What's Inside</div>
+      <h2 class="section-title reveal">Built for young Catholics<br/><span>and their teachers</span></h2>
 
-    <div class="features-grid">
-
-      <div class="feature-card reveal">
-        <span class="feature-num">01</span>
-        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
-        </svg>
-        <h3>Catechism Path</h3>
-        <p>A structured, level-by-level journey through the Catholic Catechism — no account needed to get started.</p>
+      <div class="features-grid">
+        <div class="feature-card reveal">
+          <span class="feature-icon">📖</span>
+          <h3>Catechism Path</h3>
+          <p>Level-by-level journey through the Catholic Catechism — no account needed to begin.</p>
+        </div>
+        <div class="feature-card reveal">
+          <span class="feature-icon">🔥</span>
+          <h3>Daily Streaks</h3>
+          <p>Earn streaks, unlock quizzes, and build a genuine daily habit of engaging with the Faith.</p>
+        </div>
+        <div class="feature-card reveal">
+          <span class="feature-icon">🎓</span>
+          <h3>Teacher Tools</h3>
+          <p>Create custom courses with lessons and quizzes. Share via a class code.</p>
+        </div>
+        <div class="feature-card reveal">
+          <span class="feature-icon">🚫</span>
+          <h3>No Ads. Ever.</h3>
+          <p>CrusaderKids is completely ad-free. No distractions, no data sold.</p>
+        </div>
       </div>
-
-      <div class="feature-card reveal">
-        <span class="feature-num">02</span>
-        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/>
-        </svg>
-        <h3>Daily Streaks</h3>
-        <p>Earn streaks, unlock quizzes, and build a genuine daily habit of engaging with the Faith — just like prayer.</p>
-      </div>
-
-      <div class="feature-card reveal">
-        <span class="feature-num">03</span>
-        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"/>
-        </svg>
-        <h3>Teacher Tools</h3>
-        <p>Create custom courses with lessons and quizzes. Publish with a class code and track student progress in real time.</p>
-      </div>
-
-      <div class="feature-card reveal">
-        <span class="feature-num">04</span>
-        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-        </svg>
-        <h3>No Ads. Ever.</h3>
-        <p>CrusaderKids is and will remain completely ad-free. No distractions. No data sold. Just learning.</p>
-      </div>
-
     </div>
   </section>
 
   <!-- ── QUOTE ── -->
-  <section class="quote-section">
+  <section class="quote-band">
     <blockquote class="reveal">
       "Train up a child in the way he should go;<br/>
       even when he is old he will not depart from it."
@@ -598,51 +410,49 @@
   </section>
 
   <!-- ── AUDIENCE ── -->
-  <section style="padding: 0 24px 120px; max-width: 900px; margin: 0 auto;">
-    <p class="section-label reveal" style="margin-top: 80px; margin-bottom: 16px;">Who It's For</p>
-    <h2 class="section-title reveal" style="margin-bottom: 48px;">Two roles, one mission</h2>
-    <div class="audience" style="max-width:100%;padding:0;margin:0;">
-
-      <div class="audience-card reveal">
-        <span class="audience-tag">Students</span>
-        <h3>Young Crusaders</h3>
-        <ul>
-          <li>Level-by-level quiz path</li>
-          <li>Hearts, streaks & rewards</li>
-          <li>Lessons to read before each quiz</li>
-          <li>Works offline with local Catechism</li>
-        </ul>
+  <section class="audience">
+    <div style="max-width:860px;margin:0 auto;">
+      <div class="section-tag reveal">✝ Who It's For</div>
+      <h2 class="section-title reveal" style="margin-bottom:32px;">Two roles, <span>one mission</span></h2>
+      <div class="audience-grid">
+        <div class="audience-card red reveal">
+          <span class="tag">Students</span>
+          <h3>Young Crusaders</h3>
+          <ul>
+            <li>Level-by-level quiz path</li>
+            <li>Hearts, streaks &amp; rewards</li>
+            <li>Lessons before each quiz</li>
+            <li>Works offline (local Catechism)</li>
+          </ul>
+        </div>
+        <div class="audience-card reveal">
+          <span class="tag" style="color:var(--red);">Teachers &amp; Parents</span>
+          <h3>Course Creators</h3>
+          <ul>
+            <li>Build custom lessons &amp; quizzes</li>
+            <li>Share via access code</li>
+            <li>Drag-to-reorder content</li>
+            <li>Publish or keep as a draft</li>
+          </ul>
+        </div>
       </div>
-
-      <div class="audience-card light reveal">
-        <span class="audience-tag">Teachers &amp; Parents</span>
-        <h3>Course Creators</h3>
-        <ul>
-          <li>Build custom lessons &amp; quizzes</li>
-          <li>Share via access code</li>
-          <li>Drag-to-reorder content</li>
-          <li>Publish or keep as a draft</li>
-        </ul>
-      </div>
-
     </div>
   </section>
 
   <!-- ── FOOTER ── -->
   <footer>
-    <div class="footer-logo">Crusader<span>Kids</span></div>
+    <div class="footer-logo">
+      <span class="r">Crusader</span><span class="g">Kids</span>
+    </div>
     <p class="footer-tagline">Deus vult — learning the Faith, one day at a time.</p>
-
     <nav class="footer-links">
       <a href="./privacy-policy.html">Privacy Policy</a>
       <a href="mailto:crusader.app@gmail.com">Contact</a>
     </nav>
-
     <p class="footer-copy">© 2026 CrusaderKids. All rights reserved.</p>
   </footer>
 
   <script>
-    // Scroll-reveal
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((e, i) => {
         if (e.isIntersecting) {
@@ -650,10 +460,8 @@
           observer.unobserve(e.target);
         }
       });
-    }, { threshold: 0.12 });
-
+    }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   </script>
-
 </body>
 </html>
