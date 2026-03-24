@@ -1,32 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CrusaderKids — Learn the Faith</title>
-  <meta name="description" content="CrusaderKids is a Catholic faith-education app for students and teachers. Learn the Catechism, track your progress, and build a daily habit of faith." />
+  <title>Crusader — Learn the Faith</title>
+  <meta name="description"
+    content="Crusader is a Catholic faith-education app for students and teachers. Learn the Catechism, track your progress, and build a daily habit of faith." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --red:    #cc2222;
-      --red2:   #a81c1c;
-      --gold:   #e8a020;
-      --gold2:  #f5c24a;
-      --sky:    #87CEEB;
-      --sky2:   #5bb8e8;
-      --cloud:  #dff0fb;
-      --white:  #ffffff;
-      --green:  #3a9e3f;
-      --green2: #2d7d31;
-      --text:   #1a1a2e;
-      --muted:  #5a6a7a;
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    html { scroll-behavior: smooth; }
+    :root {
+      --red: #cc2222;
+      --red2: #a81c1c;
+      --gold: #e8a020;
+      --gold2: #f5c24a;
+      --sky: #87CEEB;
+      --white: #ffffff;
+      --green: #3a9e3f;
+      --green2: #2d7d31;
+      --text: #1a1a2e;
+      --muted: #5a6a7a;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
       font-family: 'Nunito', sans-serif;
@@ -35,7 +43,6 @@
       overflow-x: hidden;
     }
 
-    /* ── HERO ── */
     .hero {
       min-height: 100vh;
       background: linear-gradient(180deg, var(--sky) 0%, #b8e4f9 60%, #dff0fb 100%);
@@ -49,7 +56,6 @@
       overflow: hidden;
     }
 
-    /* Clouds */
     .cloud {
       position: absolute;
       background: var(--white);
@@ -57,32 +63,119 @@
       opacity: 0.85;
       filter: blur(1px);
     }
-    .cloud::before, .cloud::after {
+
+    .cloud::before,
+    .cloud::after {
       content: '';
       position: absolute;
       background: var(--white);
       border-radius: 50%;
     }
-    .c1 { width:140px; height:50px; top:8%; left:-20px; animation: drift 18s ease-in-out infinite; }
-    .c1::before { width:70px; height:70px; top:-35px; left:20px; }
-    .c1::after  { width:50px; height:50px; top:-25px; left:60px; }
-    .c2 { width:180px; height:55px; top:12%; right:-30px; animation: drift 22s ease-in-out infinite reverse; }
-    .c2::before { width:80px; height:80px; top:-40px; left:30px; }
-    .c2::after  { width:60px; height:60px; top:-28px; left:80px; }
-    .c3 { width:110px; height:40px; top:40%; left:5%; opacity:0.6; animation: drift 26s ease-in-out infinite 4s; }
-    .c3::before { width:55px; height:55px; top:-28px; left:12px; }
-    .c3::after  { width:40px; height:40px; top:-20px; left:50px; }
-    .c4 { width:130px; height:45px; top:38%; right:3%; opacity:0.6; animation: drift 20s ease-in-out infinite reverse 2s; }
-    .c4::before { width:60px; height:60px; top:-30px; left:15px; }
-    .c4::after  { width:45px; height:45px; top:-22px; left:60px; }
+
+    .c1 {
+      width: 140px;
+      height: 50px;
+      top: 8%;
+      left: -20px;
+      animation: drift 18s ease-in-out infinite;
+    }
+
+    .c1::before {
+      width: 70px;
+      height: 70px;
+      top: -35px;
+      left: 20px;
+    }
+
+    .c1::after {
+      width: 50px;
+      height: 50px;
+      top: -25px;
+      left: 60px;
+    }
+
+    .c2 {
+      width: 180px;
+      height: 55px;
+      top: 12%;
+      right: -30px;
+      animation: drift 22s ease-in-out infinite reverse;
+    }
+
+    .c2::before {
+      width: 80px;
+      height: 80px;
+      top: -40px;
+      left: 30px;
+    }
+
+    .c2::after {
+      width: 60px;
+      height: 60px;
+      top: -28px;
+      left: 80px;
+    }
+
+    .c3 {
+      width: 110px;
+      height: 40px;
+      top: 40%;
+      left: 5%;
+      opacity: 0.6;
+      animation: drift 26s ease-in-out infinite 4s;
+    }
+
+    .c3::before {
+      width: 55px;
+      height: 55px;
+      top: -28px;
+      left: 12px;
+    }
+
+    .c3::after {
+      width: 40px;
+      height: 40px;
+      top: -20px;
+      left: 50px;
+    }
+
+    .c4 {
+      width: 130px;
+      height: 45px;
+      top: 38%;
+      right: 3%;
+      opacity: 0.6;
+      animation: drift 20s ease-in-out infinite reverse 2s;
+    }
+
+    .c4::before {
+      width: 60px;
+      height: 60px;
+      top: -30px;
+      left: 15px;
+    }
+
+    .c4::after {
+      width: 45px;
+      height: 45px;
+      top: -22px;
+      left: 60px;
+    }
 
     @keyframes drift {
-      0%, 100% { transform: translateX(0); }
-      50%       { transform: translateX(20px); }
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      50% {
+        transform: translateX(20px);
+      }
     }
 
     .hero-title {
-      font-size: clamp(48px, 10vw, 88px);
+      font-size: clamp(56px, 12vw, 108px);
       font-weight: 900;
       line-height: 1.0;
       margin-bottom: 16px;
@@ -90,17 +183,29 @@
       z-index: 2;
       opacity: 0;
       animation: popIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.1s;
+      color: var(--red);
     }
-    .hero-title .line1 { color: var(--red); display: block; }
-    .hero-title .line2 { color: var(--gold); display: block; }
+
+    .hero-subtitle {
+      font-size: clamp(18px, 3vw, 26px);
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 2;
+      opacity: 0;
+      animation: popIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.2s;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
 
     .hero-mascot {
-      width: min(320px, 80vw);
+      width: min(300px, 78vw);
       position: relative;
       z-index: 2;
       opacity: 0;
       animation: popIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.3s;
-      filter: drop-shadow(0 12px 24px rgba(0,0,0,0.15));
+      filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.15));
     }
 
     .hero-btn {
@@ -117,7 +222,7 @@
       text-decoration: none;
       border: none;
       cursor: pointer;
-      box-shadow: 0 6px 0 var(--green2), 0 8px 20px rgba(0,0,0,0.2);
+      box-shadow: 0 6px 0 var(--green2), 0 8px 20px rgba(0, 0, 0, 0.2);
       transition: transform 0.1s, box-shadow 0.1s;
       position: relative;
       z-index: 2;
@@ -125,13 +230,20 @@
       opacity: 0;
       animation: popIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.5s;
     }
-    .hero-btn:hover  { transform: translateY(-2px); box-shadow: 0 8px 0 var(--green2), 0 10px 24px rgba(0,0,0,0.22); }
-    .hero-btn:active { transform: translateY(3px);  box-shadow: 0 3px 0 var(--green2), 0 4px 12px rgba(0,0,0,0.18); }
-    .hero-btn .castle { font-size: 22px; }
+
+    .hero-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 0 var(--green2), 0 10px 24px rgba(0, 0, 0, 0.22);
+    }
+
+    .hero-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 3px 0 var(--green2), 0 4px 12px rgba(0, 0, 0, 0.18);
+    }
 
     .hero-sub {
       font-size: 15px;
-      color: rgba(255,255,255,0.85);
+      color: rgba(255, 255, 255, 0.85);
       font-weight: 700;
       margin-top: 16px;
       position: relative;
@@ -141,15 +253,16 @@
       animation: fadeUp 0.6s ease forwards 0.7s;
     }
 
-    /* ── FEATURES ── */
     .features {
       background: #fff;
       padding: 80px 24px;
     }
+
     .features-inner {
       max-width: 960px;
       margin: 0 auto;
     }
+
     .section-tag {
       display: inline-block;
       background: #fff3cd;
@@ -163,6 +276,7 @@
       letter-spacing: 1px;
       margin-bottom: 12px;
     }
+
     .section-title {
       font-size: clamp(26px, 4vw, 38px);
       font-weight: 900;
@@ -170,13 +284,17 @@
       margin-bottom: 48px;
       line-height: 1.2;
     }
-    .section-title span { color: var(--red); }
+
+    .section-title span {
+      color: var(--red);
+    }
 
     .features-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 20px;
     }
+
     .feature-card {
       background: #f8fafc;
       border-radius: 20px;
@@ -184,42 +302,47 @@
       border: 2px solid #e8f0fe;
       transition: transform 0.2s, box-shadow 0.2s;
     }
+
     .feature-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
     }
+
     .feature-icon {
       font-size: 36px;
       margin-bottom: 14px;
       display: block;
     }
+
     .feature-card h3 {
       font-size: 17px;
       font-weight: 800;
       color: var(--text);
       margin-bottom: 8px;
     }
+
     .feature-card p {
       font-size: 14px;
       color: var(--muted);
       line-height: 1.65;
     }
 
-    /* ── QUOTE ── */
     .quote-band {
       background: linear-gradient(135deg, var(--red) 0%, var(--red2) 100%);
       padding: 64px 24px;
       text-align: center;
     }
+
     .quote-band blockquote {
       font-size: clamp(18px, 3vw, 26px);
       font-weight: 700;
-      color: rgba(255,255,255,0.95);
+      color: rgba(255, 255, 255, 0.95);
       max-width: 600px;
       margin: 0 auto 16px;
       line-height: 1.5;
       font-style: italic;
     }
+
     .quote-band cite {
       font-size: 13px;
       letter-spacing: 2px;
@@ -229,11 +352,11 @@
       font-weight: 800;
     }
 
-    /* ── AUDIENCE ── */
     .audience {
       padding: 80px 24px;
       background: #f8fafc;
     }
+
     .audience-grid {
       max-width: 860px;
       margin: 0 auto;
@@ -241,7 +364,12 @@
       grid-template-columns: 1fr 1fr;
       gap: 20px;
     }
-    @media (max-width: 580px) { .audience-grid { grid-template-columns: 1fr; } }
+
+    @media (max-width: 580px) {
+      .audience-grid {
+        grid-template-columns: 1fr;
+      }
+    }
 
     .audience-card {
       background: var(--white);
@@ -249,10 +377,12 @@
       padding: 32px 28px;
       border: 2px solid #e2e8f0;
     }
+
     .audience-card.red {
       background: var(--red);
       border-color: var(--red2);
     }
+
     .audience-card .tag {
       display: inline-block;
       font-size: 11px;
@@ -262,15 +392,29 @@
       color: var(--gold);
       margin-bottom: 10px;
     }
-    .audience-card.red .tag { color: var(--gold2); }
+
+    .audience-card.red .tag {
+      color: var(--gold2);
+    }
+
     .audience-card h3 {
       font-size: 22px;
       font-weight: 900;
       color: var(--text);
       margin-bottom: 16px;
     }
-    .audience-card.red h3 { color: #fff; }
-    .audience-card ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+    .audience-card.red h3 {
+      color: #fff;
+    }
+
+    .audience-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
     .audience-card li {
       font-size: 15px;
       color: var(--muted);
@@ -278,32 +422,40 @@
       align-items: center;
       gap: 10px;
     }
-    .audience-card.red li { color: rgba(255,255,255,0.85); }
+
+    .audience-card.red li {
+      color: rgba(255, 255, 255, 0.85);
+    }
+
     .audience-card li::before {
       content: '⚔️';
       font-size: 14px;
       flex-shrink: 0;
     }
-    .audience-card.red li::before { content: '✝️'; }
 
-    /* ── FOOTER ── */
+    .audience-card.red li::before {
+      content: '✝️';
+    }
+
     footer {
       background: var(--text);
       padding: 48px 24px;
       text-align: center;
     }
+
     .footer-logo {
-      font-size: 26px;
+      font-size: 28px;
       font-weight: 900;
+      color: var(--red);
       margin-bottom: 6px;
     }
-    .footer-logo .r { color: var(--red); }
-    .footer-logo .g { color: var(--gold); }
+
     .footer-tagline {
       font-size: 13px;
-      color: rgba(255,255,255,0.4);
+      color: rgba(255, 255, 255, 0.4);
       margin-bottom: 24px;
     }
+
     .footer-links {
       display: flex;
       justify-content: center;
@@ -311,26 +463,48 @@
       flex-wrap: wrap;
       margin-bottom: 24px;
     }
+
     .footer-links a {
       font-size: 13px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 1px;
-      color: rgba(255,255,255,0.45);
+      color: rgba(255, 255, 255, 0.45);
       text-decoration: none;
       transition: color 0.2s;
     }
-    .footer-links a:hover { color: var(--gold); }
-    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
 
-    /* ── ANIMATIONS ── */
-    @keyframes popIn {
-      from { opacity: 0; transform: scale(0.85) translateY(16px); }
-      to   { opacity: 1; transform: scale(1) translateY(0); }
+    .footer-links a:hover {
+      color: var(--gold);
     }
+
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.2);
+    }
+
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: scale(0.85) translateY(16px);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(12px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .reveal {
@@ -338,43 +512,40 @@
       transform: translateY(24px);
       transition: opacity 0.6s ease, transform 0.6s ease;
     }
-    .reveal.visible { opacity: 1; transform: none; }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
   </style>
 </head>
+
 <body>
 
-  <!-- ── HERO ── -->
   <section class="hero">
     <div class="cloud c1"></div>
     <div class="cloud c2"></div>
     <div class="cloud c3"></div>
     <div class="cloud c4"></div>
 
-    <h1 class="hero-title">
-      <span class="line1">Crusader</span>
-      <span class="line2">Kids</span>
-    </h1>
+    <p class="hero-subtitle">Catholic Faith Education</p>
+    <h1 class="hero-title">Crusader</h1>
 
-    <img
-      src="https://crusaderkids.github.io/assets/mascot-with-cathedral.png"
-      alt="CrusaderKids mascot"
-      class="hero-mascot"
-      onerror="this.style.display='none'"
-    />
+    <img src="https://crusaderkids.github.io/assets/mascot-with-cathedral.png" alt="Crusader app mascot"
+      class="hero-mascot" onerror="this.style.display='none'" />
 
     <a href="#" class="hero-btn">
-      <span class="castle">🏰</span> Coming to Google Play
+      <span>🏰</span> Coming to Google Play
     </a>
 
     <p class="hero-sub">Free to download &nbsp;·&nbsp; No ads &nbsp;·&nbsp; Learn the Faith</p>
   </section>
 
-  <!-- ── FEATURES ── -->
   <section class="features">
     <div class="features-inner">
       <div class="section-tag reveal">⚔️ What's Inside</div>
-      <h2 class="section-title reveal">Built for young Catholics<br/><span>and their teachers</span></h2>
-
+      <h2 class="section-title reveal">Built for Catholics of all ages<br /><span>students, teachers and families</span>
+      </h2>
       <div class="features-grid">
         <div class="feature-card reveal">
           <span class="feature-icon">📖</span>
@@ -389,27 +560,25 @@
         <div class="feature-card reveal">
           <span class="feature-icon">🎓</span>
           <h3>Teacher Tools</h3>
-          <p>Create custom courses with lessons and quizzes. Share via a class code.</p>
+          <p>Create custom courses with lessons and quizzes. Share with your class via an access code.</p>
         </div>
         <div class="feature-card reveal">
           <span class="feature-icon">🚫</span>
           <h3>No Ads. Ever.</h3>
-          <p>CrusaderKids is completely ad-free. No distractions, no data sold.</p>
+          <p>Crusader is completely ad-free. No distractions, no data sold.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ── QUOTE ── -->
   <section class="quote-band">
     <blockquote class="reveal">
-      "Train up a child in the way he should go;<br/>
+      "Train up a child in the way he should go;<br />
       even when he is old he will not depart from it."
     </blockquote>
     <cite class="reveal">Proverbs 22:6</cite>
   </section>
 
-  <!-- ── AUDIENCE ── -->
   <section class="audience">
     <div style="max-width:860px;margin:0 auto;">
       <div class="section-tag reveal">✝ Who It's For</div>
@@ -417,7 +586,7 @@
       <div class="audience-grid">
         <div class="audience-card red reveal">
           <span class="tag">Students</span>
-          <h3>Young Crusaders</h3>
+          <h3>Faith Learners</h3>
           <ul>
             <li>Level-by-level quiz path</li>
             <li>Hearts, streaks &amp; rewards</li>
@@ -439,17 +608,14 @@
     </div>
   </section>
 
-  <!-- ── FOOTER ── -->
   <footer>
-    <div class="footer-logo">
-      <span class="r">Crusader</span><span class="g">Kids</span>
-    </div>
+    <div class="footer-logo">Crusader</div>
     <p class="footer-tagline">Deus vult — learning the Faith, one day at a time.</p>
     <nav class="footer-links">
       <a href="./privacy-policy.html">Privacy Policy</a>
       <a href="mailto:crusader.app@gmail.com">Contact</a>
     </nav>
-    <p class="footer-copy">© 2026 CrusaderKids. All rights reserved.</p>
+    <p class="footer-copy">© 2026 Crusader. All rights reserved.</p>
   </footer>
 
   <script>
@@ -460,8 +626,11 @@
           observer.unobserve(e.target);
         }
       });
-    }, { threshold: 0.1 });
+    }, {
+      threshold: 0.1
+    });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   </script>
 </body>
+
 </html>
